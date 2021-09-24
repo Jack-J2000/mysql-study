@@ -1,0 +1,38 @@
+数据库的分类：关系数据库(SQL) 和 非关系型数据库(NoSQL)
+
+关系型数据库
+- 理论基础：关系代数和集合论
+- 具体表象：用二维表来保存数据 - 学生表
+    ~ 行：一条记录
+    ~ 列：一个字段
+    ~ 主键列：能够唯一标识一条记录的列
+- 编程语言：SQL  - 结构化查询语言
+    ~ DDL - 数据定义语言：create / drop / alter
+    ~ DML - 数据操作语言：insert / delete / update / select
+    ~ DCL - 数据控制语言：grant / revoke
+1.创建数据库
+create database school default charset utf8mb4;
+2.删除数据库
+drop database if exists school;
+3.查看创建的数据库
+show database if exists school
+
+非关系型数据库：
+    - NoSQL ---> No SQL ---> No ,SQL --->Not Only SQL
+    - NewSQL ---> 保存数据的方式可能完全不同于传统的关系型数据库，
+                            但是允许使用关系型数据库的编程语言操作/获取数据
+
+
+
+关系型数据库产品：
+- Oracle(甲骨文)
+- DB2(IBM)
+- Microsoft SQLServer
+- Sybase
+------------------
+- MySQL
+
+LAMP = Linux + Apache + MySQL + PHP
+PHP ---> Java
+MySQL ---> Oracle
+Linux ---> 小型机

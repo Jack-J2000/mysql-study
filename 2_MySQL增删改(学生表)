@@ -1,0 +1,65 @@
+可以在命令行模式下打开mysql并查看。
+1.net start mysql
+2.进入到MySQL的bin目录下
+3.mysql -hlocalhost -uroot -p (接着输入密码)   ---如果密码忘记了可以在Navicat里的用户里修改
+4.show databases;    #该命令用于查看有哪些数据库
+  ? data types;         #查看数据类型
+
+在MySQL里：
+#如果存在名为school的数据库就删除它
+drop database if exists school;
+#创建名为school的数据库并指定默认的字符集为utf-8
+create database school default charset utf8;
+#切换到school数据库上下文环境
+use school;
+#创建学生表
+create table tb_student
+(stuid int not null comment '学号',
+stuname varchar(20) not null comment '姓名',
+stusex bit default 1 comment '性别',
+stubirth date comment '生日',
+primary key (stuid)
+);
+
+#删除学生表
+drop table if exists tb_student;
+
+#修改表
+alter table tb_student add column stuaddr varchar(255);   #添加列
+alter table tb_student change column stuaddr stuaddr varchar(511);   #修改列
+alter table tb_student drop column stuaddr;     #删除列
+-------------------------------------------------------------------------
+
+#向学生表插入数据 insert into
+insert into tb_student values(1001,'天蚕土豆',1,'2000-12-12','中国');
+insert into tb_student values(1002,'德莱厄斯',1,'2000-12-12','诺克萨斯');
+
+insert into tb_student values(1003,'卡特琳娜');    #执行该语句会报错，因为学生表有5列，而只插入了2列
+
+insert into tb_student (stuid,stuname) values (1003,'卡特琳娜');     #通过指定列的方法来加入数据
+insert into tb_student (stusex,stuid,stuname) values (0,1004,'莉莉娅');
+
+#批量加入数据
+insert into tb_student (stuid,stuname,stusex) values
+(1005,'赛恩',default),
+(1006,'德莱文',1),
+(1007,'艾瑞莉亚',0);
+
+--截断表(删除全表)
+--truncate table tb_student;
+#删除操作 delete from
+delete from tb_student where stuid=1003;       #删除学号为1003的学生，where表条件
+#更新操作 update
+update tb_student set stuaddr='诺克萨斯' where stuid in (1005,1006);     #set表赋值,给多个列赋值时中间加逗号
+update tb_student set stubirth='2000-1-1',stuaddr='艾欧尼亚' where stuid=1007;
+
+
+
+
+
+
+
+
+
+
+
