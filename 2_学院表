@@ -1,0 +1,30 @@
+实体：学生，学院
+关系：属于
+重数：多对一
+
+
+-- 创建学院表
+create table tb_college
+(
+colid int auto_increment comment '编号',
+colname varchar(31) not null comment '名称',
+website varchar(1023) comment '网址',
+primary key (colid)
+);
+#往学院表插入数据，注意学院编号是自增的
+insert into tb_college (colname) values
+('计算机学院'),
+('外国语学院'),
+('经济管理学院');
+
+#给学生表多加一个列colid，但此时学生表与学院表并无联系
+alter table tb_student add column colid int;
+-- 修改学生表添加外键约束(参照完整性)
+alter table tb_student add constraint fk_student_colid foreign key (colid) references tb_college (colid);
+
+update tb_student set colid=1 where stuid between 1001 and 1006;
+update tb_student set colid=2 where stuid=1007;
+update tb_student set colid=88 where stuid=1007;
+
+
+
