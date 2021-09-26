@@ -6,11 +6,30 @@
 -- 创建学院表
 create table tb_college
 (
-colid int auto_increment comment '编号',
-colname varchar(31) not null comment '名称',
-website varchar(1023) comment '网址',
-primary key (colid)
+collid int not null auto_increment comment '编号',
+collname varchar(50) not null comment '名称',
+collmaster varchar(20) not null comment '院长',
+collweb varchar(511) default '' comment '网站',
+primary key (collid)
 );
+
+-- 插入学院数据
+insert into tb_college
+(collname,collmaster,collweb) values
+('德玛西亚','嘉文四世','http://www.abc.com'),
+('诺克萨斯','诺克萨斯统领','http://www.520.com'),
+('祖安','祖安狂人','http://www.foo.com');
+
+
+
+
+
+
+
+
+
+
+
 #往学院表插入数据，注意学院编号是自增的
 insert into tb_college (colname) values
 ('计算机学院'),

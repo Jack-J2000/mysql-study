@@ -1,0 +1,23 @@
+#创建课程表
+create table tb_course
+(
+couid int not null comment '编号',
+couname varchar (50) not null comment '名称',
+coucredit int not null comment '学分',
+teaid int not null comment '授课老师',
+primary key (couid),
+foreign key (teaid) references tb_teacher (teaid)   #最后一行不要输逗号
+);
+
+-- 插入课程数据
+insert into tb_course
+(couid,couname,coucredit,teaid) values
+(1111,'Python程序设计',3,1122),
+(2222,'web前端开发',2,1122),
+(3333,'操作系统',4,1122),
+(4444,'计算机网络',2,1122),
+(5555,'编译原理',4,1122),
+(6666,'算法和数据结构',3,1122),
+(7777,'经贸法语',3,1122),
+(8888,'成本会计',2,1122),
+(9999,'审计',3,1122);

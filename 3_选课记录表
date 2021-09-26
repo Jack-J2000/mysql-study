@@ -1,0 +1,53 @@
+#创建选课记录表
+create table tb_score
+(
+scid int auto_increment comment '选课记录编号',
+stuid int not null comment '选课学生',
+couid int not null comment '所选课程',
+scdate datetime comment '选课时间日期',
+scmark decimal(4,1) comment '考试成绩',
+primary key (scid),
+foreign key (stuid) references tb_student (stuid),
+foreign key (couid) references tb_course (couid)
+);
+
+-- 添加唯一性约束（一个学生选某课只能选择一次）
+alter table tb_score add constraint uni_score_stuid_couid unique (stuid,couid);
+
+
+--- 插入选课记录
+insert into tb_score(stuid,couid,scdate,scmark) values
+(1001,1111,now(),95),
+(1001,2222,now(),89.2),
+(1001,3333,now(),100),
+(1001,4444,now(),null),
+(1001,6666,now(),66),
+(1002,1111,now(),77),
+(1002,5555,now(),88),
+(1033,1111,now(),42),
+(1033,4444,now(),78),
+(1059,1111,now(),65),
+(1584,1111,now(),88),
+(1059,7777,now(),95),
+(1999,1111,now(),56),
+(1999,2222,now(),71),
+(2001,1111,now(),62),
+(2001,3333,now(),35),
+(3999,1111,now(),99),
+(3333,9999,now(),null);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

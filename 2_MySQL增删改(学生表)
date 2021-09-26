@@ -12,14 +12,22 @@ drop database if exists school;
 create database school default charset utf8;
 #切换到school数据库上下文环境
 use school;
-#创建学生表
+
+
+#创建学生表  学生表和学院表存在多对一的关系，应在多的一方加入外键列
 create table tb_student
-(stuid int not null comment '学号',
+(stuid int not null comment '学号',                     #comment表说明
 stuname varchar(20) not null comment '姓名',
 stusex bit default 1 comment '性别',
-stubirth date comment '生日',
-primary key (stuid)
+stubirth date not null comment '出生日期',
+stuaddr varchar(255) default '' comment '籍贯',
+collid int not null comment '所属学院',
+primary key (stuid),
+foreign key (collid) references tb_college (collid)
 );
+#若在创建表时没有添加外键，可通过下面这条语句添加
+alter table tb_student add constraint fk_student_collid
+foreign key (collid) references tb_college (collid)
 
 #删除学生表
 drop table if exists tb_student;
@@ -29,7 +37,21 @@ alter table tb_student add column stuaddr varchar(255);   #添加列
 alter table tb_student change column stuaddr stuaddr varchar(511);   #修改列
 alter table tb_student drop column stuaddr;     #删除列
 -------------------------------------------------------------------------
+#插入学生数据
+insert into tb_student
+(stuid,stuname,stusex,stubirth,stuaddr,collid) values
+(1001,'盖伦',1,'2000-1-29','四川成都',1),
+(1002,'赵信',1,'1998-8-9','湖南长沙',1),
+(1033,'拉克丝',0,'2002-8-4','湖南长沙',1),
+(1059,'菲欧娜',0,'2000-9-9','四川成都',1),
+(1584,'塞拉斯',1,'1989-4-9','四川绵阳',1),
+(1999,'加里奥',1,'1000-1-1','福建莆田',1),
+(2001,'德莱文',1,'1988-5-1','陕西咸阳',2),
+(3999,'艾克',1,'2003-7-6','福建莆田',3),
+(3333,'辛吉德',1,'1973-10-6','广东东莞',3),
+(3001,'沃里克',1,'1990-3-2','四川成都',3);
 
+---------------------------------------------------------------------------
 #向学生表插入数据 insert into
 insert into tb_student values(1001,'天蚕土豆',1,'2000-12-12','中国');
 insert into tb_student values(1002,'德莱厄斯',1,'2000-12-12','诺克萨斯');
