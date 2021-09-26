@@ -104,11 +104,22 @@ inner join tb_course t2 on t2.couid=t3.couid where scmark is not null;
 select stuname,avgmark from tb_student t1,
 (select stuid,avg(scmark) as avgmark from tb_score group by stuid) t2
 where t1.stuid=t2.stuid and t2.avgmark is not null;
-#第二种 inner join(连表)  on (连表条件)
+
+#第二种 inner join(连表)  on (连表条件)    内连接
 select stuname,avgmark from tb_student t1 inner join
 (select stuid,avg(scmark) as avgmark from tb_score group by stuid) t2
 on t1.stuid=t2.stuid and t2.avgmark is not null;
 26.查询每个学生的姓名和选课数量(左外连接和子查询)
+#外连接分为：左外连接(left outer join)/右外连接/全外连接
+select stuname,total from tb_student t1 inner join  #内连接无法查询完整
+(select stuid,count(stuid) as total from tb_score group by stuid) t2
+on t1.stuid=t2.stuid;
+
+#ifnull()   如果是空值，数据改为0
+select stuname,ifnull(total,0) from tb_student t1 left outer join    #左外连接
+(select stuid,count(stuid) as total from tb_score group by stuid) t2
+on t1.stuid=t2.stuid limit 5 offset 5;  #limit 5 offset 5 跳过5条查后5条，也可以写成 limit 5,5
+
 
 27.
 
