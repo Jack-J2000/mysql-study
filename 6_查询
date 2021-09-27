@@ -121,7 +121,7 @@ select stuname,ifnull(total,0) from tb_student t1 left outer join    #左外连�
 on t1.stuid=t2.stuid limit 5 offset 5;  #limit 5 offset 5 跳过5条查后5条，也可以写成 limit 5,5
 
 
-27.
+
 
 
 

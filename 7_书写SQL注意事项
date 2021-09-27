@@ -1,0 +1,40 @@
+注意事项：
+1.给数据库和表命名的时候尽量使用全小写
+2.作为筛选条件的字符串是否区分大小看设置的校对规则
+   select ... where name = 'jack'
+drop database if exists hrs;
+create database hrs default charset utf8 collate utf8_general_ci;   #加入ci此时不区分大小写
+
+3.删除表时按照顺序看依赖关系
+use hrs;
+drop table if exists tb_emp;
+
+4.数据库中的对象通常会用前缀加以区分
+(table/view/index/function/procedure/trigger)
+
+5.批量插入
+-- 插入学院数据
+insert into tb_college
+(collname,collmaster,collweb) values
+('德玛西亚','嘉文四世','http://www.abc.com'),
+('诺克萨斯','诺克萨斯统领','http://www.520.com'),
+('祖安','祖安狂人','http://www.foo.com');
+
+6.事后加外键(改变表)
+alter table tb_emp add column hiredate data after mgr;   #加在列mgr后面
+alter table tb_emp add constraint fk_emp_mgr foreign key (mgr) references tb_emp(eno);   #加外键
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
