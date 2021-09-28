@@ -1,0 +1,23 @@
+##通常不推荐使用in 或者 not in 集合运算和distinct去重操作
+      可以考虑用exists或not exists 替代掉集合运算和去重操作
+
+
+select 'x';
+select 'x' from dual;
+select 'x' from tb_emp;
+select 'x' from tb_emp where eno=7800;
+select 'x' from tb_emp where eno=7900;
+select 'x' from dual where exists
+(select eno from tb_emp where ename like '盖%');
+
+select 'x' from dual where exists    #存在姓德的人员，查出x
+(select eno from tb_emp where ename like '德%');
+
+
+select ename,job from tb_emp where eno in
+(select distinct mgr from tb_emp where mgr is not null);
+#上下两条SQL语句查询结果一样，但是推荐使用exists更好一些
+select ename,job from tb_emp t1 where exists
+(select 'x' from tb_emp t2 where t1.eno=t2.mgr);
+
+

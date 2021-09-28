@@ -1,3 +1,8 @@
 #接上面的数据库
 
+——执行计划explain 可以用来查看SQL语句执行的效率
+explain select eno,ename from tb_emp where eno=7800;  #利用主键进行搜索更好一些
+explain select eno,ename from tb_emp where ename='嘉文四世';
 
+
+——索引
