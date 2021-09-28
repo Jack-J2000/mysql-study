@@ -1,8 +1,53 @@
 #接上面的数据库
+select dname as 部门名称,ifnull(total,0) as 人数 from tb_dept t1 left join  #使用了ifnull()
+(select dno,count(dno) as total from tb_emp group by dno) t2 on t1.dno=t2.dno;
 
-——执行计划explain 可以用来查看SQL语句执行的效率
+——explain生成执行计划 可以用来查看SQL语句执行的效率
 explain select eno,ename from tb_emp where eno=7800;  #利用主键进行搜索更好一些
-explain select eno,ename from tb_emp where ename='嘉文四世';
+explain select eno,ename from tb_emp where ename like '德%';
 
 
-——索引
+——索引(index)-类似于书籍目录
+  #一般在经常作为筛选条件的列上加上索引，提高查询速度，牺牲空间加快时间；
+    但是索引会使增删改变慢(因为要更新索引)；
+    模糊查询无法用索引 '德%'。    #所以不能滥用索引
+create index idx_emp_ename on tb_emp (ename);  #使用索引提高查询效率
+drop index idx_emp_ename on tb_emp;
+
+
+——视图 (相当于查询的快照，适合将查询语句复杂的表建立视图，可以跟随原表的改变而改变；
+通过视图可以将用户的访问权限限制到某些指定的列上)
+create view vw_dept_emp_count as
+select eno,ename,dname from tb_emp t1 inner join
+tb_dept t2 on t1.dno=t2.dno;
+
+select * from vw_dept_emp_count;  #查视图
+select ename,dname from vw_dept_emp_count;
+drop view vw_dept_emp_count; #删视图
+
+——(存储)过程/函数：把一系列的SQL可以封装到一个过程中，而且可以加上分支和循环，
+将来通过过程的名字直接调用过程即可，因为创建过程时已经提前编译了SQL语句，所以比直接执行SQL语句性能更好。
+
+#重新定义定界符为$$(即最后输入$$为结束函数)
+delimiter $$
+#创建存储过程
+create procedure sp_dept_avg_sal(deptno int ,out avgsal float)    #out 为输出参数
+begin
+    select avg(sal) into avgsal from tb_emp where dno=deptno;
+end$$
+#将定界符返回
+delimiter;
+#调用存储过程
+call sp_dept_avg_sal(20,@a);
+#通过输出参数取出部门平均工资
+select @a;
+drop procedure sp_dept_avg_sal;
+
+——触发器：在执行增删改操作时可以触发其他的级联操作，但是有可能导致“锁表”现象，
+实际开发中应该尽量避免使用触发器
+
+
+
+
+
+
