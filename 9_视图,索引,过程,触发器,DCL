@@ -67,10 +67,16 @@ delimiter ;
 
 drop trigger tr_dept_update;
 
-——DL
 
+DDL(create/创建，drop/删除，alter/修改)
+DML(insert/增,delete/删,update/改,select/查)
+——DCL：grant to/授予权限,revoke from/召回权限
+#先创建一个用户
+create user 'hellokitty'@'%' identified by '123123';  #%表示可从任意地方登入
+drop user 'hellokitty'@'%';
 
-
+#对用户进行授权
+grant all privileges on hrs.* to 'hellokitty'@'%';    #把hrs表的所有内容的权限授予给hellokitty
 
 
 
