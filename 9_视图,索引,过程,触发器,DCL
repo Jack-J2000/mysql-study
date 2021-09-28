@@ -2,6 +2,8 @@
 select dname as 部门名称,ifnull(total,0) as 人数 from tb_dept t1 left join  #使用了ifnull()
 (select dno,count(dno) as total from tb_emp group by dno) t2 on t1.dno=t2.dno;
 
+alter table tb_emp drop foreign key fk_emp_mgr;
+
 ——explain生成执行计划 可以用来查看SQL语句执行的效率
 explain select eno,ename from tb_emp where eno=7800;  #利用主键进行搜索更好一些
 explain select eno,ename from tb_emp where ename like '德%';
@@ -71,18 +73,24 @@ drop trigger tr_dept_update;
 DDL(create/创建，drop/删除，alter/修改)
 DML(insert/增,delete/删,update/改,select/查)
 ——DCL：grant to/授予权限,revoke from/召回权限
-#先创建一个用户
+#先创建一个用户  '用户名'@'主机名'
 create user 'hellokitty'@'%' identified by '123123';  #%表示可从任意地方登入
 drop user 'hellokitty'@'%';
 
 #对用户进行授权
-grant all privileges on hrs.* to 'hellokitty'@'%';    #把hrs表的所有内容的权限授予给hellokitty
+grant all privileges on hrs.* to 'hellokitty'@'%';    #把hrs表的所有内容的权限授予给hellokitty；此时hellokitty仅能进行表的操作，不能新建数据库
+revoke insert,delete,update on hrs.* from 'hellokitty'@'%';  #收回hellokitty用户对表hrs增删改的权限
 
 
-
-
-
-
+——事务(transaction)：把多个增删改的操作做成不可分割的原子性操作。要么全部做，要么全不做
+例如：银行存钱，必须是自己账户里的钱少了，并且银行账户钱多了；整体操作不能只完成一半。
+begin;  #开启事务
+start transaction; #开启事务
+delete from tb_emp;
+...
+...
+rollback;  #回滚(事务中的所有操作全都生效)
+commit;  #提交(事务中的操作全都生效)
 
 
 
