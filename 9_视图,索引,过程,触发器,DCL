@@ -31,7 +31,7 @@ drop view vw_dept_emp_count; #删视图
 #重新定义定界符为$$(即最后输入$$为结束函数)
 delimiter $$
 #创建存储过程
-create procedure sp_dept_avg_sal(deptno int ,out avgsal float)    #out 为输出参数
+create procedure sp_dept_avg_sal(deptno int ,out avgsal decimal(6,1))    #out 为输出参数
 begin
     select avg(sal) into avgsal from tb_emp where dno=deptno;
 end$$
@@ -45,6 +45,50 @@ drop procedure sp_dept_avg_sal;
 
 ——触发器：在执行增删改操作时可以触发其他的级联操作，但是有可能导致“锁表”现象，
 实际开发中应该尽量避免使用触发器
+update tb_dept set dno=11 where dno=10;   #执行错误，存在外键约束
+delete from tb_dept where dno=10;   #执行错误，存在外键约束
+#级联更新 1.先要去掉外键约束  2.添加级联
+alter table tb_emp drop foreign key fk_emp_dno;
+alter table tb_emp add constraint fk_emp_dno foreign key (dno)
+references tb_dept(dno) on delete cascade on update cascade;  #删除和更新是带有级联的；
+cascade(级联)/set null(设置为空值)/restrict(不允许操作)
+
+alter table tb_emp add constraint fk_emp_dno foreign key (dno)
+references tb_dept(dno);  #添加外键约束
+
+delimiter $$
+
+create trigger tr_dept_update
+after update on tb_dept for each row
+begin
+    update tb_emp set dno=new.dno where dno=old.dno;
+end$$
+delimiter ;
+
+drop trigger tr_dept_update;
+
+——DL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
