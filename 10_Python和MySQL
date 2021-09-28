@@ -1,0 +1,29 @@
+在pip文件夹下的pip.init可配置国内镜像源
+在C:\Users\hp(Administrator) 下的git.ignore 里可以配置忽略文件
+
+pip freeze  #查看三方模块及版本号
+pip freeze > requirement.txt  #重定向，将三方模块及版本号放入requirement.txt文件里
+pip install -r requirement.txt #按照该文件里的第三方模块进行安装
+pip install pymysql
+pip install pymysql==0.9.2 #此时装入的是指定版本的三方模块
+
+
+###使用pymysql连接数据库
+conn = pymysql.connect(host='192.168.244.1',port=3306,
+                       user='root',password='123456',
+                        db='school',charset='utf8')
+print(conn)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
