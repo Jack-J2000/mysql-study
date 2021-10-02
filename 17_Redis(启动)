@@ -1,0 +1,45 @@
+设计数据库中的表 - ER图 (实体关系图)  - 概念模式图
+
+Redis  -KV数据库  - 内存 -  单线程+异步I/O (多路I/O复用)
+Tornado / Node.js   (单线程+异步I/O)
+
+应用可分为两种：
+计算密集型应用(类似于挖矿-比特币)         # 多进程 + 多线程
+I/O密集型应用(交互式，用户输入输出)    # 单线程 + 异步I/O(协程--微线程)
+
+2008年 - LLOOGG - log(日志)
+MySQL --> Redis - REmote DIctionary Server
+Github / Twitter / Sina / tencent / baidu / meituan (这些公司都在使用)
+
+
+热数据(经常使用)/冷数据(不经常使用的数据)
+
+Redis不仅性能好，而且用途很多
+1.高速缓存服务(用户经常访问的数据从数据库搬到内存)
+2.实时排行榜
+3.投票点赞
+4.消息队列
+
+Linux下安装Redis:
+yum install redis  #不推荐
+
+源代码构建安装 make && make install
+启动Redis服务器：
+redis-server  --port 1234 (修改端口，默认端口6379)  --requirepass 200100(设密码)  --appendonly yes
+redis-server 配置文件 > redis.log &  (配置重定向)
+
+启动Redis客户端：
+redis-cli -h 主机IP地址 -p 端口 -a [密码]
+主机：端口> 命令[auth 密码] [ping 测试连接]
+
+
+
+
+
+
+
+
+
+
+
+
