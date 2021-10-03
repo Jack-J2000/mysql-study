@@ -1,0 +1,9 @@
+###用于计算地理位置信息--Redis和MongoDB都内置了
+
+#添加地点的经纬度坐标
+geoadd map 104.0763 30.6234 libao 104.0672 30.6333 shuma 104.7172 31.4594 mianyang
+
+#map 属于zset类型
+geodist map libao shuma km  #计算两点间距离(单位:千米)-直线距离
+georadius map 104.0 31.0 50 km withdist   #map中在指定经纬度距离50km范围之内的元素，并显示出直线距离
+

@@ -1,0 +1,10 @@
+###主从复制--读写分离结构(Redis多机结构)###
+
+#奴隶命令—奴隶只能读，不能写
+redis-server --slaveof [服务器] [port] --masterauth [口令] > redis.log & #重启服务器，指定主人的服务器端口号，输入口令；重定向
+
+slaveof no one    #不当奴隶了
+
+新版本将slaveof 改为 replicaof
+#主人命令—可以写数据
+info replication    #查看有无奴隶
