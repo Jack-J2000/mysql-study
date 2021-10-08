@@ -31,15 +31,3 @@ redis-server 配置文件 > redis.log &  (配置重定向)
 启动Redis客户端：
 redis-cli -h 主机IP地址 -p 端口 -a [密码]
 主机：端口> 命令[auth 密码] [ping 测试连接]
-
-
-
-
-
-
-
-
-
-
-
-
